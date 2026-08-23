@@ -5,17 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>مصحف سورة الكهف</title>
 
-    <!-- إعدادات التثبيت على شاشة الهاتف واللانشر (PWA Standalone) -->
+    <!-- الربط مع ملف التثبيت المباشر -->
+    <link rel="manifest" href="manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="سورة الكهف">
     <meta name="theme-color" content="#064E3B">
 
-    <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22%D9%85%D8%B5%D8%AD%D9%81%20%D8%B3%D9%88%D8%B1%D8%A9%20%D8%A7%D9%84%D9%83%D9%87%D9%81%22%2C%22short_name%22%3A%22%D8%B3%D9%88%D8%B1%D8%A9%20%D8%A7%D9%84%D9%83%D9%87%D9%81%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23F7F5F0%22%2C%22theme_color%22%3A%22%23064E3B%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20512%20512%27%3E%3Crect%20width%3D%27512%27%20height%3D%27512%27%20rx%3D%27128%27%20fill%3D%27%23064E3B%27%2F%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2755%25%27%20text-anchor%3D%27middle%27%20fill%3D%27%23D4AF37%27%20font-size%3D%27260%27%20dominant-baseline%3D%27middle%27%3E%F0%9F%93%96%3C%2Ftext%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
-
     <style>
-        /* 🌟 الثيم النهاري الفاخر */
         :root {
             --bg-base: #F7F5F0;
             --bg-card: #FFFFFF;
@@ -23,14 +21,12 @@
             --gold-primary: #9A7B38;
             --gold-light: #FBF7EC;
             --emerald: #064E3B;
-            --emerald-light: #ECFDF5;
             --text-main: #1C1917;
             --text-muted: #6B7280;
             --shadow: 0 20px 40px -15px rgba(28, 25, 23, 0.08);
             --radius: 28px;
         }
 
-        /* 🌙 الثيم الليلي الراقي */
         body.dark-mode {
             --bg-base: #0B0F17;
             --bg-card: #131C2E;
@@ -38,7 +34,6 @@
             --gold-primary: #D4AF37;
             --gold-light: rgba(212, 175, 55, 0.08);
             --emerald: #10B981;
-            --emerald-light: rgba(16, 185, 129, 0.1);
             --text-main: #F3F4F6;
             --text-muted: #9CA3AF;
             --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
@@ -72,7 +67,6 @@
             max-width: 640px;
         }
 
-        /* الهيدر العلوي (نظيف وبدون أزرار) */
         header {
             text-align: center;
             margin-bottom: 16px;
@@ -89,7 +83,6 @@
             gap: 8px;
         }
 
-        /* شريط التقدم */
         .progress-indicator {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -102,7 +95,6 @@
             box-shadow: var(--shadow);
         }
 
-        /* بطاقة الآية الكبرى */
         .quran-manuscript-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -140,7 +132,6 @@
             margin-bottom: 18px;
         }
 
-        /* خط الآية الكبير والواضح */
         .quran-ayah-text {
             font-size: 32px;
             font-weight: 700;
@@ -158,7 +149,6 @@
             opacity: 0.7;
         }
 
-        /* صندوق التفسير المفتوح دائماً */
         .tafsir-box-wrapper {
             margin-top: 14px;
             text-align: right;
@@ -186,7 +176,6 @@
             border: 1px solid var(--border-color);
         }
 
-        /* الأزرار الرئيسية */
         .primary-actions {
             display: grid;
             grid-template-columns: 1.3fr 1fr 1.3fr;
@@ -194,7 +183,6 @@
             margin-bottom: 10px;
         }
 
-        /* شريط التنقل السريع */
         .fast-navigation-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -244,7 +232,6 @@
             background: var(--bg-card);
         }
 
-        /* 📍 شريط الخيارات السفلي (تم نقل الأزرار العلوية إليه) */
         .bottom-tools-bar {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -273,7 +260,6 @@
         }
         .tool-btn:active { transform: scale(0.96); }
 
-        /* شاشة المحفوظات */
         .review-panel { display: none; }
         .review-panel.active { display: block; }
         .reader-panel.hidden { display: none; }
@@ -296,30 +282,25 @@
 <body>
 
     <div class="container">
-        <!-- الهيدر العلوي النظيف -->
         <header>
             <div class="app-title">📖 سورة الكهف المباركة</div>
         </header>
 
-        <!-- لوحة القراءة والتحفيظ -->
         <div class="reader-panel" id="readerPanel">
             <div class="progress-indicator">
                 <span id="progressLabel" style="font-weight: 800; font-size: 14px; color: var(--gold-primary);">الآية 1 من 110</span>
                 <span style="font-size: 13px; color: var(--text-muted);">حفظ وتدبر</span>
             </div>
 
-            <!-- بطاقة الآية الكبرى مع السحب اللمسي -->
             <div class="quran-manuscript-card" id="quranCardArea">
                 <span class="verse-number-frame" id="verseNumDisplay">الآية 1</span>
                 
-                <!-- نص الآية بخط كبير وواضح -->
                 <div class="quran-ayah-text" id="ayahTextDisplay">
                     الْحَمْدُ لِلَّهِ الَّذِي أَنزَلَ عَلَىٰ عَبْدِهِ الْكِتَابَ وَلَمْ يَجْعَل لَّهُ عِوَجًا ۜ
                 </div>
 
                 <div class="swipe-hint">↔ اسحب لليمين أو اليسار للتنقل بين الآيات</div>
 
-                <!-- التفسير ومعاني الكلمات (مفتوح دائماً) -->
                 <div class="tafsir-box-wrapper">
                     <div class="tafsir-title">📖 معاني الكلمات والتفسير الميسر:</div>
                     <div class="tafsir-body" id="tafsirBodyContent">
@@ -328,14 +309,12 @@
                 </div>
             </div>
 
-            <!-- الأزرار الرئيسية: التالي في اليمين، الحفظ في الوسط، السابق في اليسار -->
             <div class="primary-actions">
                 <button class="action-btn btn-main-next" id="nextBtnNode" onclick="navigateVerses(1)">التالي ➔</button>
                 <button class="action-btn btn-bookmark" id="bookmarkBtnNode" onclick="toggleBookmarkCurrent()">⭐ حفظ</button>
                 <button class="action-btn" id="prevBtnNode" onclick="navigateVerses(-1)">🠔 السابق</button>
             </div>
 
-            <!-- شريط التنقل السريع الإضافي -->
             <div class="fast-navigation-grid">
                 <button class="action-btn btn-jump" onclick="jumpStep(10)">+10</button>
                 <button class="action-btn btn-jump" onclick="jumpStep(5)">+5</button>
@@ -344,15 +323,13 @@
                 <button class="action-btn btn-jump" onclick="jumpStep(-10)">-10</button>
             </div>
 
-            <!-- 📍 شريط الأدوات السفلي المدمج -->
             <div class="bottom-tools-bar">
                 <button class="tool-btn" id="viewToggleBtn" onclick="toggleReviewView()">⭐ المحفوظات (<span id="savedCounter">0</span>)</button>
                 <button class="tool-btn" onclick="toggleTheme()" id="themeBtn">☀️ نهاري</button>
-                <button class="tool-btn" onclick="installToLauncher()">📲 إضافة للشاشة</button>
+                <button class="tool-btn" onclick="installToLauncher()" id="installBtn">📲 تثبيت التطبيق</button>
             </div>
         </div>
 
-        <!-- لوحة المحفوظات للمراجعة -->
         <div class="review-panel" id="reviewPanel">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
                 <h2 style="font-size: 18px; font-weight: 800; color: var(--gold-primary);">⭐ الآيات المحفوظة للمراجعة</h2>
@@ -363,7 +340,6 @@
     </div>
 
     <script>
-        // سورة الكهف كاملة (110 آيات كاملة بالنص القرآني والتفسير الدقيق)
         const quranAlKahfData = [
             { id: 1, text: "الْحَمْدُ لِلَّهِ الَّذِي أَنزَلَ عَلَىٰ عَبْدِهِ الْكِتَابَ وَلَمْ يَجْعَل لَّهُ عِوَجًا ۜ", tafseer: "الثناء الكامل لله الذي أنزل القرآن على نبيه محمد ﷺ وجعله مستقيماً لا تناقض فيه ولا عوج." },
             { id: 2, text: "قَيِّمًا لِّيُنذِرَ بَأْسًا شَدِيدًا مِّن لَّدُنْهُ وَيُبَشِّرَ الْمُؤْمِنِينَ الَّذِينَ يَعْمَلُونَ الصَّالِحَاتِ أَنَّ لَهُمْ أَجْرًا حَسَنًا", tafseer: "مستقيماً لا ميل فيه، ليخوف الكافرين من عذاب شديد، ويبشر المؤمنين الصالحين بالجنة." },
@@ -477,7 +453,6 @@
             { id: 110, text: "قُلْ إِنَّمَا أَنَا بَشَرٌ مِّثْلُكُمْ يُوحَىٰ إِلَيَّ أَنَّمَا إِلَٰهُكُمْ إِلَٰهٌ وَاحِدٌ ۖ فَمَن كَانَ يَرْجُو لِقَاءَ رَبِّهِ فَلْيَعْمَلْ عَمَلًا صَالِحًا وَلَا يُشْرِكْ بِعِبَادَةِ رَبِّهِ أَحَدًا", tafseer: "قل إنما أنا رسول وبشر يوحي إلي ربي أن إلهكم إله واحد، فمن كان يطمع في ثواب ربه فليعمل عملاً خالصاً موافقاً للشرع ولا يشرك بربه أحداً." }
         ];
 
-        // تهيئة وحفظ الحالة
         let appConfig = JSON.parse(localStorage.getItem('quran_kahf_complete_v110_final_bottom')) || {
             activeIdx: 0,
             bookmarkedIds: [],
@@ -506,7 +481,6 @@
             }
         }
 
-        // الملاحة والتنقل
         function navigateVerses(step) {
             let target = appConfig.activeIdx + step;
             if (target >= 0 && target < quranAlKahfData.length) {
@@ -538,7 +512,6 @@
             persistState();
         }
 
-        // الشاشات
         let isReviewMode = false;
         function toggleReviewView() {
             isReviewMode = !isReviewMode;
@@ -564,7 +537,6 @@
             }
         }
 
-        // تحديث الواجهة
         function renderInterface() {
             applyThemeStyles();
 
@@ -574,7 +546,7 @@
             document.getElementById('progressLabel').innerText = `الآية ${appConfig.activeIdx + 1} من ${totalCount}`;
             document.getElementById('verseNumDisplay').innerText = `الآية ${currentObj.id}`;
             document.getElementById('ayahTextDisplay').innerText = currentObj.text;
-            document.getElementById('tafsirBodyContent').innerText = currentObj.tafsseer || currentObj.tafseer;
+            document.getElementById('tafsirBodyContent').innerText = currentObj.tafseer;
 
             document.getElementById('prevBtnNode').disabled = appConfig.activeIdx === 0;
             document.getElementById('nextBtnNode').disabled = appConfig.activeIdx === totalCount - 1;
@@ -617,7 +589,7 @@
             });
         }
 
-        // محرك السحب اللمسي والفأرة
+        // محرك السحب اللمسي
         const cardArea = document.getElementById('quranCardArea');
         let startX = 0;
         let startY = 0;
@@ -661,7 +633,13 @@
             }
         }
 
-        // إضافة للشاشة / التثبيت
+        // --- تسجيل Service Worker لتفعيل التثبيت الكامل في اللانشر ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(() => {});
+            });
+        }
+
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -671,9 +649,11 @@
         function installToLauncher() {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
-                deferredPrompt = null;
+                deferredPrompt.userChoice.then(() => {
+                    deferredPrompt = null;
+                });
             } else {
-                alert("اضغط على خيارات المتصفح (⋮) ثم اختر 'إضافة إلى الشاشة الرئيسية' أو 'Create shortcut' وسيتم تثبيته كتطبيق مستقل.");
+                alert("لتثبيت التطبيق على الشاشة بملء الشاشة:\nاضغط على خيارات المتصفح (⋮) ثم اختر 'Install app' أو 'تثبيت التطبيق'.");
             }
         }
 
