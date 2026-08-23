@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>مصحف سورة الكهف - المقام الرفيع</title>
+
+    <!-- 📱 إعدادات التثبيت على اللانشر والشاشة الرئيسية (PWA) -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="سورة الكهف">
+    <meta name="theme-color" content="#064E3B">
+
+    <!-- أيقونة وبيانات التثبيت المباشر -->
+    <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22%D9%85%D8%B5%D8%AD%D9%81%20%D8%B3%D9%88%D8%B1%D8%A9%20%D8%A7%D9%84%D9%83%D9%87%D9%81%22%2C%22short_name%22%3A%22%D8%B3%D9%88%D8%B1%D8%A9%20%D8%A7%D9%84%D9%83%D9%87%D9%81%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23F7F5F0%22%2C%22theme_color%22%3A%22%23064E3B%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20512%20512%27%3E%3Crect%20width%3D%27512%27%20height%3D%27512%27%20rx%3D%27128%27%20fill%3D%27%23064E3B%27%2F%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2755%25%27%20text-anchor%3D%27middle%27%20fill%3D%27%23D4AF37%27%20font-size%3D%27260%27%20dominant-baseline%3D%27middle%27%3E%F0%9F%93%96%3C%2Ftext%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
+
     <style>
         /* 🌟 الثيم النهاري الفاخر */
         :root {
@@ -49,7 +60,7 @@
             background: var(--bg-base);
             color: var(--text-main);
             min-height: 100vh;
-            padding: 20px 16px 120px 16px;
+            padding: 16px 16px 120px 16px;
             transition: background 0.4s ease, color 0.4s ease;
             display: flex;
             flex-direction: column;
@@ -67,8 +78,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
-            padding: 0 8px;
+            margin-bottom: 20px;
+            padding: 0 4px;
         }
 
         .app-title {
@@ -83,22 +94,31 @@
 
         .header-controls {
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
 
         .icon-btn {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 8px 16px;
+            padding: 8px 14px;
             border-radius: 99px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             cursor: pointer;
             box-shadow: var(--shadow);
             transition: transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
         .icon-btn:active { transform: scale(0.96); }
+
+        .btn-install {
+            background: linear-gradient(135deg, var(--emerald) 0%, #047857 100%);
+            color: #FFFFFF;
+            border: none;
+        }
 
         /* شريط التقدم */
         .progress-indicator {
@@ -106,14 +126,14 @@
             border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 14px 22px;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-shadow: var(--shadow);
         }
 
-        /* بطاقة الآية */
+        /* بطاقة الآية الكبرى مع تأثير السحب اللمسي */
         .quran-manuscript-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -121,7 +141,7 @@
             padding: 36px 24px 28px 24px;
             box-shadow: var(--shadow);
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             position: relative;
             overflow: hidden;
             touch-action: pan-y;
@@ -129,9 +149,7 @@
             cursor: grab;
         }
 
-        .quran-manuscript-card:active {
-            cursor: grabbing;
-        }
+        .quran-manuscript-card:active { cursor: grabbing; }
 
         .quran-manuscript-card::before {
             content: '';
@@ -150,7 +168,7 @@
             border-radius: 99px;
             font-size: 14px;
             font-weight: 800;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
         }
 
         /* خط الآية الكبير والواضح */
@@ -199,7 +217,7 @@
             border: 1px solid var(--border-color);
         }
 
-        /* الأزرار الرئيسية: التالي في اليمين، الحفظ في الوسط، السابق في اليسار */
+        /* الأزرار الرئيسية */
         .primary-actions {
             display: grid;
             grid-template-columns: 1.3fr 1fr 1.3fr;
@@ -282,8 +300,9 @@
     <div class="container">
         <!-- الهيدر العلوي -->
         <header>
-            <div class="app-title">📖 سورة الكهف المباركة</div>
+            <div class="app-title">📖 سورة الكهف</div>
             <div class="header-controls">
+                <button class="icon-btn btn-install" id="installBtn" onclick="installToLauncher()">📲 تثبيت التطبيق</button>
                 <button class="icon-btn" id="viewToggleBtn" onclick="toggleReviewView()">⭐ المحفوظات (<span id="savedCounter">0</span>)</button>
                 <button class="icon-btn" onclick="toggleTheme()" id="themeBtn">☀️ نهاري</button>
             </div>
@@ -296,18 +315,18 @@
                 <span style="font-size: 13px; color: var(--text-muted);">حفظ وتدبر</span>
             </div>
 
-            <!-- بطاقة الآية الكبرى مع تفعيل السحب اللمسي -->
+            <!-- بطاقة الآية الكبرى مع دعم السحب اللمسي والفأرة -->
             <div class="quran-manuscript-card" id="quranCardArea">
                 <span class="verse-number-frame" id="verseNumDisplay">الآية 1</span>
                 
-                <!-- نص الآية بخط كبير جداً وواضح -->
+                <!-- نص الآية بخط كبير وواضح -->
                 <div class="quran-ayah-text" id="ayahTextDisplay">
-                    الْحَمْدُ لِلَّهِ الَّذِي أَنْزَلَ عَلَىٰ عَبْدِهِ الْكِتَابَ وَلَمْ يَجْعَلْ لَهُ عِوَجًا
+                    الْحَمْدُ لِلَّهِ الَّذِي أَنزَلَ عَلَىٰ عَبْدِهِ الْكِتَابَ وَلَمْ يَجْعَل لَّهُ عِوَجًا ۜ
                 </div>
 
                 <div class="swipe-hint">↔ اسحب لليمين أو اليسار للتنقل بين الآيات</div>
 
-                <!-- التفسير ومعاني الكلمات (معروض ومفتوح دائماً) -->
+                <!-- التفسير ومعاني الكلمات (مفتوح دائماً) -->
                 <div class="tafsir-box-wrapper">
                     <div class="tafsir-title">📖 معاني الكلمات والتفسير الميسر:</div>
                     <div class="tafsir-body" id="tafsirBodyContent">
@@ -316,7 +335,7 @@
                 </div>
             </div>
 
-            <!-- الأزرار الرئيسية الثلاثة: التالي في اليمين، الحفظ في الوسط، السابق في اليسار -->
+            <!-- الأزرار الرئيسية: التالي في اليمين، الحفظ في الوسط، السابق في اليسار -->
             <div class="primary-actions">
                 <button class="action-btn btn-main-next" id="nextBtnNode" onclick="navigateVerses(1)">التالي ➔</button>
                 <button class="action-btn btn-bookmark" id="bookmarkBtnNode" onclick="toggleBookmarkCurrent()">⭐ حفظ</button>
@@ -456,14 +475,14 @@
         ];
 
         // تهيئة وحفظ الحالة
-        let appConfig = JSON.parse(localStorage.getItem('quran_kahf_complete_v110')) || {
+        let appConfig = JSON.parse(localStorage.getItem('quran_kahf_complete_v110_final')) || {
             activeIdx: 0,
             bookmarkedIds: [],
             themeMode: "light"
         };
 
         function persistState() {
-            localStorage.setItem('quran_kahf_complete_v110', JSON.stringify(appConfig));
+            localStorage.setItem('quran_kahf_complete_v110_final', JSON.stringify(appConfig));
             renderInterface();
         }
 
@@ -639,6 +658,29 @@
                 } else {
                     navigateVerses(-1);
                 }
+            }
+        }
+
+        // --- محرك التثبيت على اللانشر (PWA Installer) ---
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const installBtn = document.getElementById('installBtn');
+            if (installBtn) installBtn.style.display = 'inline-flex';
+        });
+
+        function installToLauncher() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        document.getElementById('installBtn').style.display = 'none';
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                alert("لتثبيت التطبيق على الشاشة الرئيسية:\n1. اضغط على خيارات المتصفح (⋮ في الأعلى أو الأسفل).\n2. اختر 'إضافة إلى الشاشة الرئيسية' أو 'تثبيت التطبيق'.");
             }
         }
 
